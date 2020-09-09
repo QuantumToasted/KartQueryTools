@@ -1,5 +1,5 @@
 # KartQueryTools
-A small set of tools for querying SRB2Kart servers as well as the Master Server which hosts them.
+A small set of tools for querying [SRB2Kart](https://wiki.srb2.org/wiki/SRB2Kart) servers as well as the Master Server which hosts them.
 Simple to use with little to no setup required, as there are not that many methods.
 
 ## Example usage
