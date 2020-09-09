@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Description>A small set of tools for querying SRB2Kart servers as well as the master server which hosts them.</Description>
+    <Copyright>https://github.com/QuantumToasted/KartQueryTools</Copyright>
+    <RepositoryUrl>https://github.com/QuantumToasted/KartQueryTools</RepositoryUrl>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Daniel Jarski\source\repos\KartQueryTools\KartQueryTools.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Daniel Jarski\source\repos\KartQueryTools\KartQueryTools.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
