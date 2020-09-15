@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KartQueryTools</name>
+    </assembly>
+    <members>
+        <member name="T:KartQueryTools.KartMap">
+            <summary>
+            Represents a map currently being played on a server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartMap.InternalName">
+            <summary>
+            The internal game ID/name for this map.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartMap.Title">
+            <summary>
+            The display name of this map. May be UNKNOWN if it is a hidden/"Hell" map.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartMap.MD5">
+            <summary>
+            The MD5 hash for this map. Always 16 bytes long.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartMap.ActNumber">
+            <summary>
+            The internal act number of this map.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartMap.IsZone">
+            <summary>
+            If true, this map is internally listed as a Zone.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartMap.TimeElapsed">
+            <summary>
+            The amount of time elapsed since this map started play.
+            </summary>
+        </member>
+        <member name="M:KartQueryTools.KartMap.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:KartQueryTools.KartPlayer">
+            <summary>
+            Represents a player currently playing on a server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.Node">
+            <summary>
+            The node number of the player as returned by the <c>"nodes"</c> command in-game.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.Name">
+            <summary>
+            The in-game name the player has set.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.Team">
+            <summary>
+            The internal team the player is on.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.Skin">
+            <summary>
+            The skin the player is using.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.Data">
+            <summary>
+            Internal server-related data for the player.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.Score">
+            <summary>
+            The player's current in-game score.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartPlayer.TimeInServer">
+            <summary>
+            The amount of time the player has been on the server.
+            </summary>
+        </member>
+        <member name="M:KartQueryTools.KartPlayer.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:KartQueryTools.KartQuery">
+            <summary>
+            Provides methods to query individual SRB2Kart servers, as well as the HTTP Master Server.
+            </summary>
+        </member>
+        <member name="F:KartQueryTools.KartQuery.DEFAULT_SRB2KART_PORT">
+            <summary>
+            The default port SRB2Kart and SRB2 use for hosting.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartQuery.QueryTimeout">
+            <summary>
+            Gets or sets how long a query should wait before timing out waiting for a response, in milliseconds.
+            <para>Defaults to 10,000 (10 seconds).</para>
+            </summary>
+        </member>
+        <member name="M:KartQueryTools.KartQuery.QueryServer(System.String,System.Int32)">
+            <summary>
+            Attempts to query an SRB2Kart server for information.
+            </summary>
+            <param name="hostname">The hostname or IP address of the server.</param>
+            <param name="port">The port the server is running on.</param>
+            <returns>A <see cref="T:KartQueryTools.KartServer"/> object representing server query information.</returns>
+        </member>
+        <member name="M:KartQueryTools.KartQuery.QueryServer(System.Net.IPAddress,System.Int32)">
+            <summary>
+            Attempts to query an SRB2Kart server for information.
+            </summary>
+            <param name="address">The IP address of the server.</param>
+            <param name="port">The port the server is running on.</param>
+            <returns>A <see cref="T:KartQueryTools.KartServer"/> object representing server query information.</returns>
+        </member>
+        <member name="M:KartQueryTools.KartQuery.QueryServer(System.Net.IPEndPoint)">
+            <summary>
+            Attempts to query an SRB2Kart server for information.
+            </summary>
+            <param name="endpoint">The endpoint (IP address and port) of the server.</param>
+            <returns>A <see cref="T:KartQueryTools.KartServer"/> object representing server query information.</returns>
+        </member>
+        <member name="M:KartQueryTools.KartQuery.QueryMasterServerAsync">
+            <summary>
+            Fetches all SRB2Kart servers via the new Master Server.
+            </summary>
+        </member>
+        <member name="T:KartQueryTools.KartServer">
+            <summary>
+            Represents an individual SRB2Kart server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.Application">
+            <summary>
+            The application of this server. Will most likely be SRB2Kart, or possibly SRB2 if querying a vanilla SRB2 server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.MajorVersion">
+            <summary>
+            The major version number of this server. For SRB2Kart version 1.2, this would be 1.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.MinorVersion">
+            <summary>
+            The minor version number of this server. For SRB2Kart version 1.2, this would be 2.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.CurrentPlayerCount">
+            <summary>
+            The current number of players on this server, as returned by the server query.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.MaxPlayerCount">
+            <summary>
+            The maximum number of players allowed on this server at a time.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.CurrentPlayers">
+            <summary>
+            A collection of the current players on this server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.GameType">
+            <summary>
+            The internal game type of this server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.ModifiedGame">
+            <summary>
+            If true, this server is using addons/is modded.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.CheatsEnabled">
+            <summary>
+            If true, this server has one or more cheats enabled.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.KartVars">
+            <summary>
+            Internal Kart related variables for this server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.NumberOfFilesNeeded">
+            <summary>
+            The total number of files needed to connect to this server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.Name">
+            <summary>
+            The display name of this server, without any color formatting codes.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.CurrentMap">
+            <summary>
+            The map currently being played on this server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.HttpSource">
+            <summary>
+            The <c>"http_source"</c> value on this server (if set), otherwise <see langword="null"/>.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServer.NeededFiles">
+            <summary>
+            A collection of file names and MD5s needed to join this server.
+            </summary>
+        </member>
+        <member name="M:KartQueryTools.KartServer.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:KartQueryTools.KartServerListEntry">
+            <summary>
+            Represents a server listed on the HTTP Master Server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServerListEntry.Endpoint">
+            <summary>
+            The address of this server.
+            </summary>
+        </member>
+        <member name="P:KartQueryTools.KartServerListEntry.Contact">
+            <summary>
+            If set, the contact information for this server's owner(s).
+            </summary>
+        </member>
+        <member name="T:KartQueryTools.Utilities.Utils">
+            <summary>
+            KartQuery-related utilities.
+            </summary>
+        </member>
+        <member name="M:KartQueryTools.Utilities.Utils.ToTics(System.TimeSpan)">
+            <summary>
+            Converts a <see cref="T:System.TimeSpan"/> into a number of SRB2 tics representing it, rounded down.
+            </summary>
+            <param name="ts">A duration of time.</param>
+            <returns>The number of SRB2 tics that would have elapsed in that time.</returns>
+        </member>
+    </members>
+</doc>

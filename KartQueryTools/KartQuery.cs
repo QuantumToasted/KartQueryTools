@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 using static KartQueryTools.Packets.packettype_t;
 
 namespace KartQueryTools
@@ -19,18 +21,18 @@ namespace KartQueryTools
     public static class KartQuery
     {
         private const int DUMMY_CHECKSUM_START = 0x1234567;
+        private const int API_VERSION = 2;
+        private const string MASTER_SERVER_LIST = "https://ms.kartkrew.org/ms/api/games/SRB2Kart/{0}/servers?v={1}";
+        private const string MASTER_SERVER_VERSION = "https://ms.kartkrew.org/ms/api/games/SRB2Kart/version?v={0}";
 
         /// <summary>
         /// The default port SRB2Kart and SRB2 use for hosting.
         /// </summary>
         public const int DEFAULT_SRB2KART_PORT = 5029;
 
-        /// <summary>
-        /// The url the server list is to be fetched from.
-        /// </summary>
-        public const string HTTP_MASTER_SERVER_LIST = "https://mb.srb2.org/MS/0/servers";
 
         private static readonly HttpClient Http = new HttpClient();
+        private static int? _kartVersion;
 
         /// <summary>
         /// Gets or sets how long a query should wait before timing out waiting for a response, in milliseconds.
@@ -134,41 +136,36 @@ namespace KartQueryTools
         }
 
         /// <summary>
-        /// Fetches all servers via the HTTP Master Server.
+        /// Fetches all SRB2Kart servers via the new Master Server.
         /// </summary>
-        /// <returns>A collection of server entries. May not ALL be SRB2Kart servers, check their <see cref="KartServerListEntry.GameVersion"/> property.</returns>
-        public static ImmutableArray<KartServerListEntry> QueryMasterServer()
+        public static async Task<ImmutableArray<KartServerListEntry>> QueryMasterServerAsync()
         {
-            // ew, sync
-            var response = Http.GetStringAsync(HTTP_MASTER_SERVER_LIST).GetAwaiter().GetResult();
+            if (!_kartVersion.HasValue)
+            {
+                var kartVerResponse = await Http.GetStringAsync(string.Format(MASTER_SERVER_VERSION, API_VERSION));
+                _kartVersion = int.Parse(kartVerResponse.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0]);
+            }
+            
+            var response = await Http.GetStringAsync(string.Format(MASTER_SERVER_LIST, _kartVersion.Value, API_VERSION));
+            if (string.IsNullOrWhiteSpace(response))
+                throw new HttpRequestException("The Master Server did not respond to a query. It may be down, or the API version may have changed.");
+
             var reader = new StringReader(response);
             var servers = new List<KartServerListEntry>();
 
-            var currentRoom = 0;
             var currentLine = reader.ReadLine();
 
             do
             {
-                if (string.IsNullOrWhiteSpace(currentLine))
-                {
-                    // empty line between groups of servers/rooms
-                    continue;
-                }
-
-                if (int.TryParse(currentLine, out var nextRoom))
-                {
-                    currentRoom = nextRoom;
-                    continue;
-                }
-
+                // Format is: ADDR PORT CONTACT?
+                // CONTACT is optional!
                 var split = currentLine.Split(' ');
-                if (split.Length != 4)
-                    throw new Exception($"{currentLine} was supposed to have 4 arguments but has {split.Length}.");
+                var address = IPAddress.Parse(split[0]);
+                var port = int.Parse(split[1]);
+                var contact = split[2]; // could be empty
 
-                // Format is: ADDR PORT NAME VER
-                servers.Add(new KartServerListEntry(new IPEndPoint(IPAddress.Parse(split[0]), int.Parse(split[1])),
-                    split[2], split[3], currentRoom));
-
+                servers.Add(new KartServerListEntry(new IPEndPoint(address, port),
+                    !string.IsNullOrWhiteSpace(contact) ? HttpUtility.UrlDecode(contact) : null));
             } while ((currentLine = reader.ReadLine()) != null);
 
             return servers.ToImmutableArray();
@@ -232,6 +229,11 @@ namespace KartQueryTools
             }
 
             return filesNeeded;
+        }
+
+        static KartQuery()
+        {
+
         }
     }
 }

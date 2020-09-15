@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace KartQueryTools.Test
@@ -6,7 +7,7 @@ namespace KartQueryTools.Test
     public class Tests
     {
         // Developer's note: These tests will fail if these servers cease to function.
-        // These servers are fully functional and pass all tests as of September 8th, 2020.
+        // These servers are fully functional and pass all tests as of September 15th, 2020.
         // Other servers can be tested from https://mb.srb2.org/masterserver.php.
 
         [Theory]
@@ -48,16 +49,14 @@ namespace KartQueryTools.Test
         }
 
         [Fact]
-        public void ServerList_Success()
+        public async Task ServerList_Success()
         {
-            var servers = KartQuery.QueryMasterServer();
+            var servers = await KartQuery.QueryMasterServerAsync();
 
             Assert.All(servers, server =>
             {
                 Assert.NotNull(server.Endpoint);
-                Assert.True(!string.IsNullOrWhiteSpace(server.Name));
-                Assert.True(server.Room > 0);
-                Assert.True(!string.IsNullOrWhiteSpace(server.GameVersion));
+                Assert.True(server.Contact?.Equals(string.Empty) != true);
             });
         }
     }

@@ -7,12 +7,10 @@ namespace KartQueryTools
     /// </summary>
     public sealed class KartServerListEntry
     {
-        internal KartServerListEntry(IPEndPoint endpoint, string name, string gameVersion, int room)
+        internal KartServerListEntry(IPEndPoint endpoint, string contact)
         {
             Endpoint = endpoint;
-            Name = name;
-            GameVersion = gameVersion;
-            Room = room;
+            Contact = contact;
         }
 
         /// <summary>
@@ -21,22 +19,8 @@ namespace KartQueryTools
         public IPEndPoint Endpoint { get; }
 
         /// <summary>
-        /// The raw display name of this server. URL-encoded, and contains color escape codes.
+        /// If set, the contact information for this server's owner(s).
         /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// The version of the game this server is running. May vary depending on the game or mod.
-        /// </summary>
-        public string GameVersion { get; }
-
-        /// <summary>
-        /// The room number this server is in.
-        /// </summary>
-        public int Room { get; }
-
-        /// <inheritdoc />
-        public override string ToString()
-            => Name;
+        public string Contact { get; }
     }
 }
