@@ -12,6 +12,6 @@ Console.WriteLine(server.Name);
 
 // Queries a list of all SRB2Kart servers currently on the Master Server.
 // It's recommended to cache these results instead of querying every time you need servers.
-var allServers = KartQuery.QueryMasterServer();
-Console.WriteLine(allServers[0].Name);
+var allServers = await KartQuery.QueryMasterServerAsync();
+Console.WriteLine(allServers[0].Endpoint.ToString());
 ```
