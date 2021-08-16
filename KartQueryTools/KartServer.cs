@@ -47,12 +47,12 @@ namespace KartQueryTools
         public string Application { get; }
 
         /// <summary>
-        /// The major version number of this server. For SRB2Kart version 1.2, this would be 1.
+        /// The major version number of this server. For SRB2Kart version 1.3, this would be 1.
         /// </summary>
         public byte MajorVersion { get; }
 
         /// <summary>
-        /// The minor version number of this server. For SRB2Kart version 1.2, this would be 2.
+        /// The minor version number of this server. For SRB2Kart version 1.3, this would be 3.
         /// </summary>
         public byte MinorVersion { get; }
 
