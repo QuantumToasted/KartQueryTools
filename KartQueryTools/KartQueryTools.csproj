@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Description>A small set of tools for querying SRB2Kart servers as well as the master server which hosts them.</Description>
     <Copyright>https://github.com/QuantumToasted/KartQueryTools</Copyright>
