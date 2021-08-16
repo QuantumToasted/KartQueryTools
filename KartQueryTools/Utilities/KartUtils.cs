@@ -14,6 +14,9 @@ namespace KartQueryTools
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
         
+        /// <summary>
+        /// The number of game tics that occur per second in SRB2's engine, effectively the base unit of time.
+        /// </summary>
         public const int SRB2_TICRATE = 35; // Tics per second
 
         // Credit to Tyron for the original method on Hyuuseeker
