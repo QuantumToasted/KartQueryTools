@@ -1,5 +1,4 @@
 ﻿using KartQueryTools.Packets;
-using KartQueryTools.Utilities;
 using System;
 
 namespace KartQueryTools
@@ -13,9 +12,9 @@ namespace KartQueryTools
         {
             unsafe
             {
-                InternalName = Utils.DecodeString(srv.mapname, serverinfo_pak.MAX_MAP_NAME_LENGTH);
+                InternalName = KartUtils.DecodeString(srv.mapname, serverinfo_pak.MAX_MAP_NAME_LENGTH);
                 
-                Title = Utils.DecodeString(srv.maptitle, serverinfo_pak.MAX_MAP_TITLE_LENGTH);
+                Title = KartUtils.DecodeString(srv.maptitle, serverinfo_pak.MAX_MAP_TITLE_LENGTH);
 
                 MD5 = new byte[16];
                 for (var i = 0; i < 16; i++)
@@ -26,7 +25,7 @@ namespace KartQueryTools
             IsZone = srv.iszone == 0 || srv.iszone == 1
                 ? srv.iszone == 1
                 : throw new ArgumentOutOfRangeException(nameof(srv.iszone));
-            TimeElapsed = TimeSpan.FromSeconds(srv.leveltime / (double) Utils.SRB2_TICRATE);
+            TimeElapsed = TimeSpan.FromSeconds(srv.leveltime / (double) KartUtils.SRB2_TICRATE);
         }
 
         /// <summary>

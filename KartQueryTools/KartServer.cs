@@ -1,5 +1,4 @@
 ﻿using KartQueryTools.Packets;
-using KartQueryTools.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -16,9 +15,9 @@ namespace KartQueryTools
         {
             unsafe
             {
-                Application = Utils.DecodeString(srv.application, serverinfo_pak.MAX_APPLICATION_LENGTH);
-                Name = Utils.DecodeString(srv.servername, serverinfo_pak.MAX_SERVER_NAME_LENGTH);
-                HttpSource = Utils.DecodeString(srv.httpsource, serverinfo_pak.MAX_MIRROR_LENGTH);
+                Application = KartUtils.DecodeString(srv.application, serverinfo_pak.MAX_APPLICATION_LENGTH);
+                Name = KartUtils.DecodeString(srv.servername, serverinfo_pak.MAX_SERVER_NAME_LENGTH);
+                HttpSource = KartUtils.DecodeString(srv.httpsource, serverinfo_pak.MAX_MIRROR_LENGTH);
 
                 if (string.IsNullOrWhiteSpace(HttpSource))
                     HttpSource = null; // Just in case the query returns empty spaces

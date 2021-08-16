@@ -14,7 +14,7 @@ namespace KartQueryTools
 
             unsafe
             {
-                Name = Utilities.Utils.DecodeString(plr.name, plrinfo.MAX_PLAYER_NAME_LENGTH);
+                Name = KartUtils.DecodeString(plr.name, plrinfo.MAX_PLAYER_NAME_LENGTH);
             }
 
             Team = plr.team;

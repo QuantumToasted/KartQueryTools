@@ -2,14 +2,19 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace KartQueryTools.Utilities
+namespace KartQueryTools
 {
     /// <summary>
     /// KartQuery-related utilities.
     /// </summary>
-    public static class Utils
+    public static class KartUtils
     {
-        internal const int SRB2_TICRATE = 35; // Tics per second
+        static KartUtils()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+        
+        public const int SRB2_TICRATE = 35; // Tics per second
 
         // Credit to Tyron for the original method on Hyuuseeker
         internal static unsafe string DecodeString(byte* bytes, int fullLength)
@@ -17,8 +22,9 @@ namespace KartQueryTools.Utilities
             var span = new Span<byte>(bytes, fullLength);
             var nullIndex = span.IndexOf((byte) 0);
             var relevant = span.Slice(0, nullIndex == -1 ? fullLength : nullIndex);
+
             fixed (byte* pointer = &MemoryMarshal.GetReference(relevant))
-                return Encoding.UTF8.GetString(pointer, relevant.Length);
+                return Encoding.GetEncoding(1252).GetString(pointer, relevant.Length);
         }
         
         /// <summary>
