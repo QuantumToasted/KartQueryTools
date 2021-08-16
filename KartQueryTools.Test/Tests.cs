@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -7,19 +8,20 @@ namespace KartQueryTools.Test
     public class Tests
     {
         // Developer's note: These tests will fail if these servers cease to function.
-        // These servers are fully functional and pass all tests as of September 15th, 2020.
-        // Other servers can be tested from https://mb.srb2.org/masterserver.php.
+        // These servers are fully functional and pass all tests as of August 16th, 2021.
+        // Other servers can be tested from https://ms.kartkrew.org/.
 
         [Theory]
-        [InlineData("104.131.85.99",
-                    "104.248.57.42",
-                    "167.172.26.109",
-                    "159.65.36.160")]
+        [InlineData("73.176.15.98:5031",
+                    "73.176.15.98:5032",
+                    "73.176.15.98:5033",
+                    "73.176.15.98:5034",
+                    "157.245.170.147:5029")]
         public void ServerQuery_Success(params string[] addresses)
         {
             foreach (var address in addresses)
             {
-                var server = KartQuery.QueryServer(address);
+                var server = KartQuery.QueryServer(IPEndPoint.Parse(address));
 
                 Assert.NotNull(server);
                 Assert.True(!string.IsNullOrWhiteSpace(server.Name));
@@ -32,6 +34,8 @@ namespace KartQueryTools.Test
                 Assert.True(!string.IsNullOrWhiteSpace(server.CurrentMap.InternalName));
                 Assert.True(server.CurrentMap.MD5.Length == 16);
                 Assert.True(server.CurrentMap.TimeElapsed > TimeSpan.Zero);
+                
+                Assert.True(server.CurrentPlayerCount == server.CurrentPlayers.Length);
 
                 Assert.All(server.CurrentPlayers, player =>
                 {
